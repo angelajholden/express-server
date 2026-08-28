@@ -18,13 +18,13 @@ jobs:
 
         steps:
             - name: Checkout repository
-            uses: actions/checkout@v5
+              uses: actions/checkout@v5
 
             - name: Set up Node.js
-            uses: actions/setup-node@v5
-            with:
-                node-version: 24
-                cache: npm
+              uses: actions/setup-node@v5
+              with:
+                  node-version: 24
+                  cache: npm
 
             - name: Verify dependencies
               run: npm ci
@@ -42,18 +42,18 @@ jobs:
                   SOURCE: ./
                   EXCLUDE: ".git/, .gitignore, .github/, node_modules/, .env, .DS_Store, README.md, LICENSE.md, TODO.md"
                   SCRIPT_AFTER: |
-                    set -e
-                    cd /var/www/html
-                    npm ci --omit=dev
-                    chmod 600 .env
-                    pm2 startOrReload ecosystem.config.cjs --env production
-                    pm2 save
-                    curl \
-                        --fail \
-                        --silent \
-                        --show-error \
-                        --retry 10 \
-                        --retry-delay 2 \
-                        --retry-connrefused \
-                        http://127.0.0.1:3000/instagram/images > /dev/null
+                      set -e
+                      cd /var/www/html
+                      npm ci --omit=dev
+                      chmod 600 .env
+                      pm2 startOrReload ecosystem.config.cjs --env production
+                      pm2 save
+                      curl \
+                          --fail \
+                          --silent \
+                          --show-error \
+                          --retry 10 \
+                          --retry-delay 2 \
+                          --retry-connrefused \
+                          http://127.0.0.1:3000/instagram/images > /dev/null
                   SCRIPT_AFTER_REQUIRED: true
