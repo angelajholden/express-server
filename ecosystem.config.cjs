@@ -4,7 +4,7 @@ module.exports = {
 			name: "express-server",
 			script: "./index.js",
 			cwd: "/var/www/html",
-			env: {
+			env_production: {
 				NODE_ENV: "production",
 			},
 		},
