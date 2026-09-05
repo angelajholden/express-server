@@ -1,6 +1,6 @@
 import cors from "cors";
 
-const allowedOrigins = ["https://practicelayouts.com", "https://angelajholden.github.io/soho-landing/"];
+const allowedOrigins = ["https://practicelayouts.com", "https://angelajholden.github.io"];
 
 const corsMiddleware = cors({
 	origin(origin, callback) {
