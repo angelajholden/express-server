@@ -1,3 +1,9 @@
+import { readFileSync } from "node:fs";
+
+const altText = JSON.parse(
+	readFileSync(new URL("../data/instagram-alt-text.json", import.meta.url), "utf8")
+);
+
 const FIELDS = "id,caption,media_type,media_url,permalink,thumbnail_url,timestamp";
 const INSTAGRAM_CACHE_TTL_MS = 12 * 60 * 60 * 1000;
 // const INSTAGRAM_CACHE_TTL_MS = 10 * 1000;
@@ -29,11 +35,18 @@ export async function getInstagramMedia() {
 		}
 
 		const data = await response.json();
+		const normalizedData = {
+			...data,
+			data: data.data.map((item) => ({
+				...item,
+				alt: altText[item.id] ?? "",
+			})),
+		};
 
-		cachedMedia = data;
+		cachedMedia = normalizedData;
 		cacheUpdatedAt = Date.now();
 
-		return data;
+		return normalizedData;
 	} catch (error) {
 		if (cachedMedia) {
 			console.warn("Instagram refresh failed; returning stale cache");
