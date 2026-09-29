@@ -1,10 +1,13 @@
 import cors from "cors";
 
-const allowedOrigins = ["https://practicelayouts.com", "https://angelajholden.github.io"];
-
 const corsMiddleware = cors({
 	origin(origin, callback) {
-		if (!origin || allowedOrigins.includes(origin)) {
+		if (
+			!origin ||
+			origin === "https://practicelayouts.com" ||
+			origin.endsWith(".practicelayouts.com") ||
+			origin === "https://angelajholden.github.io"
+		) {
 			return callback(null, true);
 		}
 
